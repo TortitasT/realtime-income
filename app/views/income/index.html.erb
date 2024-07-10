@@ -1,0 +1,50 @@
+<section>
+  <div class="window" style="width:30rem;">
+    <div class="title-bar">
+      <button aria-label="Close" class="close"></button>
+      <h1 class="title">Your monthly income</h1>
+      <button aria-label="Resize" class="resize"></button>
+    </div>
+    <div class="separator"></div>
+
+    <div class="window-pane">
+      <p>
+        This is the total income you have made this month.
+      </p>
+
+      <h2 id="income" style="margin-bottom: 0;">
+        0.0000 €
+      </h2>
+      <small id="per_second">0.0000 €/s</small>
+
+      <div class="separator" style="margin-bottom: 2rem;"></div>
+
+      <form>
+        <label for="salary">
+          Enter your monthly salary:
+        </label>
+        <input type="text" name="salary" id="salary" placeholder="1781.41">
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const income = document.getElementById('income');
+    const currentMonth = new Date().getMonth() + 1;
+    const firstDayOfTheMonth = new Date().setDate(1);
+    const salaryInput = document.getElementById('salary');
+    const perSecond = document.getElementById('per_second');
+
+    const interval = setInterval(() => {
+      const secondsSinceFirstDayOfTheMonth = (new Date() - firstDayOfTheMonth) / 1000;
+
+      const incomePerSecond = salaryInput.value / (30 * 24 * 60 * 60);
+      const incomeUntilNow = incomePerSecond * secondsSinceFirstDayOfTheMonth;
+
+      income.textContent = incomeUntilNow.toFixed(4) + ' €';
+      perSecond.textContent = incomePerSecond.toFixed(4) + ' €/s';
+    }, 1000);
+  });
+</script>
